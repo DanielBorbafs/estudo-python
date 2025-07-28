@@ -1,11 +1,9 @@
 class ContaBancaria():
     def __init__(self, titular, saldo=0):
-        """Inicia com um titular em branco e um saldo zerado"""
         self.titular = titular
         self.saldo = saldo
 
     def depositar(self, valor):
-        """Tenta adicionar valor ao saldo e trata erros de entrada inválida"""
         try:
             valor = float(valor)
             if valor > 0:
@@ -42,3 +40,19 @@ class ContaBancaria():
     def mostrar_saldo(self):
         print(f'Saldo atual de {self.titular}: R$ {self.saldo:.2f}')
 
+
+class ContaPoupanca(ContaBancaria):
+    def __init__(self, juros, saldo, titular):
+        self.juros = juros
+        super().__init__(titular, saldo)
+
+    def calcula_juros(self, tempo):
+        return self.saldo + (self.saldo * self.juros * tempo)
+
+
+conta01 = ContaPoupanca(juros=0.1, saldo=1500, titular="Melissa")
+conta01.mostrar_saldo()
+
+
+rendimento = conta01.calcula_juros(6)
+print(f'Saldo após 6 meses: R$ {rendimento:.2f}')
